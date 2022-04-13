@@ -55,8 +55,20 @@ async function getCoursesUsingRegularOperators() {
     console.log(courses);
 }
 
+async function getCoursesPagination() {
+    pageNumber = 1; // as query string params in real web app
+    pageSize = 10; // as query string params in real web app like /api/courses?pageNumber=2&pageSize=10
+
+    const courses = await Course
+        .find()
+        .skip((pageNumber-1) * pageSize) // to skip all documents in previous page
+        .limit(pageSize) // this shows the current page documents
+    console.log(courses);
+}
+
 getCoursesUsingComparisonOperators();
 getCoursesUsingLogicalOperators();
 getCoursesUsingRegularOperators();
+getCoursesPagination();
 
 
