@@ -66,9 +66,43 @@ async function getCoursesPagination() {
     console.log(courses);
 }
 
-getCoursesUsingComparisonOperators();
-getCoursesUsingLogicalOperators();
-getCoursesUsingRegularOperators();
-getCoursesPagination();
+async function updateCourseByFetching(id) {
+    const course = await Course.findById(id);
+    if(!course) return;
+    course.isPublished = false;
+    course.author = 'changed author';
+
+    const result = await course.save();
+    console.log(result);
+}
+
+async function updateCourseDirectly(id) {
+    const result = await Course.updateOne({ _id: id }, {
+        $set: {
+            author: 'other changed user',
+            isPublished: true
+        }
+    });
+    console.log(result);
+}
+
+async function deleteCourse(id) {
+    const result = await Course.deleteOne({ _id: id });
+    console.log(result);
+}
+
+
+// createCourse();
+
+// getCoursesUsingComparisonOperators();
+// getCoursesUsingLogicalOperators();
+// getCoursesUsingRegularOperators();
+// getCoursesPagination();
+
+// updateCourseByFetching('6259bdbe79e1478e3506ed44');
+// updateCourseDirectly('6259bdbe79e1478e3506ed44');
+
+// deleteCourse('6259bdbe79e1478e3506ed44');
+
 
 
